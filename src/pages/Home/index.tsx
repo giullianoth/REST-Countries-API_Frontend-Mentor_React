@@ -3,6 +3,7 @@ import Container from "../../components/Container"
 import styles from "./Home.module.css"
 import { AiOutlineSearch } from "react-icons/ai"
 import Card from "../../components/Card"
+import { Link } from "react-router-dom"
 
 const Home = () => {
     const [query, setQuery] = useState<string>("")
@@ -15,7 +16,7 @@ const Home = () => {
 
     const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
         const { value } = event.target
-        console.log(value)        
+        console.log(value)
     }
 
     return (
@@ -51,10 +52,18 @@ const Home = () => {
 
             <section className={styles.list}>
                 <Container className={styles.list__container}>
-                    <Card />
-                    <Card />
-                    <Card />
-                    <Card />
+                    <Link to="/country">
+                        <Card />
+                    </Link>
+                    <Link to="/country">
+                        <Card />
+                    </Link>
+                    <Link to="/country">
+                        <Card />
+                    </Link>
+                    <Link to="/country">
+                        <Card />
+                    </Link>
                 </Container>
             </section>
         </>

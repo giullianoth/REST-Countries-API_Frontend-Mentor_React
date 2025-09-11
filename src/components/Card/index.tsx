@@ -3,7 +3,7 @@ import styles from "./Card.module.css"
 const Card = () => {
   return (
     <article className={styles.card}>
-        <div className={styles.card__image}>
+        <div className={styles.card__flag}>
             <img src="https://flagcdn.com/w320/lt.png" alt="Lithuania" />
         </div>
 

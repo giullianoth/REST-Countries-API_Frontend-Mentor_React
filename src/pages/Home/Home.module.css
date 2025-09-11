@@ -1,4 +1,4 @@
-.filter, .list {
+.filter {
     margin-block: 20px 40px;
 }
 
@@ -38,6 +38,10 @@
     width: 100%;
 }
 
+.list {
+    margin-block: 40px 20px;
+}
+
 .list__container {
     display: grid;
     grid-template-columns: 1fr;
@@ -46,7 +50,7 @@
 }
 
 @media screen and (min-width: 768px) {
-    .filter {
+    .filter, .list {
         margin-block: 60px;
     }
 
@@ -71,5 +75,6 @@
 
     .list__container {
         grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
     }
 }
