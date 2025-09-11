@@ -1,0 +1,35 @@
+.header {
+    width: 100%;
+    padding-block: 30px;
+    transition: var(--transition);
+    position: sticky;
+    top: 0;
+    background-color: var(--color-background-elements);
+    box-shadow: var(--shadow);
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__title {
+    font-size: 1em;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__theme button {
+    font-size: var(--font-size-homepage-items);
+}
+
+@media screen and (min-width: 768px) {
+    .header__title {
+        font-size: 1.4em;
+    }
+
+    .header__theme button {
+        font-size: var(--font-size-detail-page);
+    }
+}

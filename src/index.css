@@ -17,6 +17,9 @@
   --color-background-elements: var(--color-blue-900);
   --color-text: var(--color-white);
 
+  /* Shadow */
+  --shadow: 0 0 10px hsla(200, 15%, 8%, 0.3);
+
   /* TYPOGRAPHY */
   /* Body Copy */
   --font-size-homepage-items: 14px;
@@ -28,9 +31,15 @@
   --font-weight-semibold: 600;
   --font-weight-extrabold: 800;
 
-  /* Container */
+  /* CONTAINER */
   --container-width: 1280px;
   --container-clearance: 20px;
+
+  /* TRANSITION */
+  --transition: all 0.3s ease;
+
+  /* BORDER RADIUS */
+  --radius: 5px;
 }
 
 * {
@@ -42,8 +51,13 @@
 body {
   font-family: var(--font-nunito-sans);
   font-size: var(--font-size-detail-page);
-  background-color: var(--color-blue-950);
-  color: var(--color-white);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-weight: var(--font-weight-semibold);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-extrabold);
 }
 
 a {

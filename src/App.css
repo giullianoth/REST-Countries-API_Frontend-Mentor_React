@@ -1,0 +1,21 @@
+.button {
+  display: inline-flex;
+  column-gap: 10px;
+  padding: 20px 46px;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: var(--font-weight-light);
+  background-color: var(--color-background-elements);
+  border: none;
+  border-radius: var(--radius);
+  vertical-align: middle;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.button.clear {
+  padding: 0;
+  background: none;
+  box-shadow: none;
+}

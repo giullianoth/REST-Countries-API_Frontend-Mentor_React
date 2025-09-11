@@ -3,11 +3,12 @@ import styles from "./Container.module.css"
 
 type Props = {
     children?: ReactNode
+    className?: string
 }
 
-const Container = ({ children }: Props) => {
+const Container = ({ children, className }: Props) => {
     return (
-        <div className={styles.container}>
+        <div className={styles.container + (className ? ` ${className}` : "")}>
             {children}
         </div>
     )
