@@ -1,0 +1,17 @@
+.footer {
+    width: 100%;
+    padding-block: 10px;
+    background-color: var(--color-background-elements);
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.footer__container {
+    text-align: center;
+    font-size: 11px;
+    font-weight: var(--font-weight-light);
+}
+
+.footer__container a {
+    text-decoration: underline;
+}

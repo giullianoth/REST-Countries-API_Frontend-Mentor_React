@@ -1,3 +1,13 @@
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root main {
+  flex-grow: 1;
+}
+
 .button {
   display: inline-flex;
   column-gap: 10px;
