@@ -26,45 +26,37 @@ const Country = () => {
 
                         <div className={styles.country__infoContent}>
                             <p className={styles.country__data}>
-                                <strong>Native Name:</strong>&nbsp;
-                                Lietuva
+                                <strong>Native Name:</strong> Lietuva
                             </p>
 
                             <p className={styles.country__data}>
-                                <strong>Population:</strong>&nbsp;
-                                2794700
+                                <strong>Population:</strong> {new Intl.NumberFormat().format(2794700)}
                             </p>
 
                             <p className={styles.country__data}>
-                                <strong>Region:</strong>&nbsp;
-                                Europe
+                                <strong>Region:</strong> Europe
                             </p>
 
                             <p className={styles.country__data}>
-                                <strong>Sub Region:</strong>&nbsp;
-                                Northern Europe
+                                <strong>Sub Region:</strong> Northern Europe
                             </p>
 
                             <p className={styles.country__data}>
-                                <strong>Capital:</strong>&nbsp;
-                                Vilnius
+                                <strong>Capital:</strong> Vilnius
                             </p>
                         </div>
 
                         <div className={styles.country__infoContent}>
                             <p className={styles.country__data}>
-                                <strong>Top Level Domain:</strong>&nbsp;
-                                .lt
+                                <strong>Top Level Domain:</strong> .lt
                             </p>
 
                             <p className={styles.country__data}>
-                                <strong>Currencies:</strong>&nbsp;
-                                Euro (€)
+                                <strong>Currencies:</strong> Euro (€)
                             </p>
 
                             <p className={styles.country__data}>
-                                <strong>Languages:</strong>&nbsp;
-                                Lithuanian
+                                <strong>Languages:</strong> Lithuanian
                             </p>
                         </div>
 

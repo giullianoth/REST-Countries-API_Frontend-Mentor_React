@@ -13,18 +13,15 @@ const Card = () => {
             </header>
 
             <p className={styles.card__data}>
-                <strong>Population:</strong>&nbsp;
-                2794700
+                <strong>Population:</strong> {new Intl.NumberFormat().format(2794700)}
             </p>
 
             <p className={styles.card__data}>
-                <strong>Region:</strong>&nbsp;
-                Europe
+                <strong>Region:</strong> Europe
             </p>
 
             <p className={styles.card__data}>
-                <strong>Capital:</strong>&nbsp;
-                Vilnius
+                <strong>Capital:</strong> Vilnius
             </p>
         </div>
     </article>
