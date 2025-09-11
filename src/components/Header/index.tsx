@@ -1,9 +1,9 @@
-import { PiMoon, PiMoonFill } from "react-icons/pi"
 import Container from "../Container"
 import styles from "./Header.module.css"
 import { useWindowBehavior } from "../../hooks/window-behavior"
 import { useChangeTheme } from "../../hooks/change-theme"
 import { useState } from "react"
+import { AiFillMoon, AiOutlineMoon } from "react-icons/ai"
 
 const Header = () => {
     const [theme, setTheme] = useState<"dark" | "light">("dark")
@@ -22,7 +22,7 @@ const Header = () => {
 
                 <div className={styles.header__theme}>
                     <button className="button clear" onClick={handleChangeTheme}>
-                        {theme === "dark" ? <PiMoonFill /> : <PiMoon />}
+                        {theme === "dark" ? <AiFillMoon /> : <AiOutlineMoon />}
                         Dark Mode
                     </button>
                 </div>
