@@ -10,6 +10,8 @@
 
 .button {
   display: inline-flex;
+  justify-content: center;
+  align-items: center;
   column-gap: 10px;
   padding: 20px 46px;
   color: inherit;
@@ -19,7 +21,6 @@
   background-color: var(--color-background-elements);
   border: none;
   border-radius: var(--radius);
-  vertical-align: middle;
   cursor: pointer;
   box-shadow: var(--shadow);
 }

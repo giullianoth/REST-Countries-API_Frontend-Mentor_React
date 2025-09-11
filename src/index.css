@@ -53,7 +53,7 @@ body {
   font-size: var(--font-size-detail-page);
   background-color: var(--color-background);
   color: var(--color-text);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-light);
   transition: var(--transition);
 }
 
@@ -68,4 +68,33 @@ a {
 
 svg {
   vertical-align: middle;
+}
+
+input, select {
+  padding: 20px 34px;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: var(--font-weight-semibold);
+  outline: none;
+  background-color: var(--color-background-elements);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border: none;
+  border-radius: var(--radius);
+}
+
+input::placeholder {
+  color: var(--color-white);
+}
+
+img {
+  width: auto;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+strong {
+  font-weight: var(--font-weight-semibold);
 }

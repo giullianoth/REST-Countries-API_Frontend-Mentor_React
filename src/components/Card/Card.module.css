@@ -1,0 +1,27 @@
+.card {
+    background-color: var(--color-background-elements);
+    transition: var(--transition);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.card__image img {
+    width: 100%;
+}
+
+.card__info {
+    padding: 20px 20px 40px 20px;
+}
+
+.card__name {
+    margin-bottom: 20px;
+}
+
+.card__name h2 {
+    font-size: 1.2em;
+}
+
+.card__data {
+    line-height: 1.6em;
+}

@@ -24,7 +24,7 @@
     align-items: center;
 }
 
-.header__theme button {
+.header__theme button:not(> svg) {
     font-size: var(--font-size-homepage-items);
 }
 
