@@ -8,6 +8,10 @@
     box-shadow: var(--shadow);
 }
 
+.header.scrolling {
+    padding-block: 20px;
+}
+
 .header__container {
     display: flex;
     justify-content: space-between;
