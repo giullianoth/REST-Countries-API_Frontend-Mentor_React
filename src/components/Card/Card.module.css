@@ -4,10 +4,17 @@
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
+    height: 100%;
+}
+
+.card__flag {
+    height: 190px;
+    box-shadow: var(--shadow);
 }
 
 .card__flag img {
     width: 100%;
+    height: 100%;
 }
 
 .card__info {

@@ -77,7 +77,7 @@ const Home = () => {
 
                         : countriesList && countriesList.map(country => (
                             <Link key={country.cca3} to={`/country/${country.cca3}`}>
-                                <Card />
+                                <Card country={country} />
                             </Link>
                         ))}
                     {/* <Link to="/country">
