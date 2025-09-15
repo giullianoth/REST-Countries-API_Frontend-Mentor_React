@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from "react"
+import { useEffect, useState } from "react"
 import Container from "../../components/Container"
 import styles from "./Home.module.css"
 import { AiOutlineSearch } from "react-icons/ai"

@@ -88,6 +88,10 @@
         flex-direction: row;
     }
 
+    .country__border p {
+        margin-top: 10px;
+    }
+
     .country__borderCountries {
         justify-content: flex-start;
     }

@@ -110,7 +110,14 @@ const APIServices = () => {
 
     const searchCountries = async (terms: string) => {
         const res = await getAllCountries()
-        const foundCountries = res?.filter(country => country.name.common.toLowerCase().includes(terms.toLowerCase()))
+
+        const foundCountries = res?.filter(country => {
+            return country.name.common.toLowerCase().includes(terms.toLowerCase())
+                || country.name.nativeName?.common?.toLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .includes(terms.toLowerCase())
+        })
 
         if (!foundCountries) {
             return []
