@@ -7,6 +7,7 @@ import { Link } from "react-router-dom"
 import APIServices from "../../api/api-services"
 import type { ICountry } from "../../interfaces/country"
 import Select from "../../components/Select"
+import Loading from "../../components/Loading"
 
 const Home = () => {
     const [query, setQuery] = useState<string>("")
@@ -74,7 +75,7 @@ const Home = () => {
             <section className={styles.list}>
                 <Container className={styles.list__container}>
                     {loading
-                        ? <p>Loading...</p>
+                        ? <Loading className={styles.list__loading} />
 
                         : (countriesList && countriesList.length
                             ? countriesList.map(country => (
@@ -83,7 +84,7 @@ const Home = () => {
                                 </Link>
                             ))
 
-                            : <p>
+                            : <p className={styles.list__empty}>
                                 <strong>Your search returned no results.</strong>
                             </p>)}
                 </Container>

@@ -49,6 +49,11 @@
     max-width: 320px;
 }
 
+.list__empty, .list__loading {
+    text-align: center;
+    grid-column-start: 1;
+}
+
 @media screen and (min-width: 768px) {
     .filter, .list {
         margin-block: 60px;
@@ -61,6 +66,10 @@
     .list__container {
         max-width: var(--container-width);
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .list__empty, .list__loading {
+        grid-column-end: 4;
     }
 }
 
@@ -76,5 +85,9 @@
     .list__container {
         grid-template-columns: repeat(4, 1fr);
         gap: 40px;
+    }
+
+    .list__empty, .list__loading {
+        grid-column-end: 5;
     }
 }

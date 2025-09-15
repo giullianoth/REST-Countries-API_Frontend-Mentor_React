@@ -5,6 +5,7 @@ import { AiOutlineArrowLeft } from "react-icons/ai"
 import { useEffect, useState } from "react"
 import type { ICountry } from "../../interfaces/country"
 import APIServices from "../../api/api-services"
+import Loading from "../../components/Loading"
 
 const Country = () => {
     const { code } = useParams()
@@ -37,7 +38,7 @@ const Country = () => {
                 </div>
 
                 {loading
-                    ? <p>Loading...</p>
+                    ? <Loading />
 
                     : <div className={styles.country__details}>
                         <div className={styles.country__flag}>
@@ -63,9 +64,10 @@ const Country = () => {
                                     <strong>Region:</strong> {country?.region}
                                 </p>
 
-                                <p className={styles.country__data}>
-                                    <strong>Sub Region:</strong> {country?.subregion}
-                                </p>
+                                {country?.subregion &&
+                                    <p className={styles.country__data}>
+                                        <strong>Sub Region:</strong> {country?.subregion}
+                                    </p>}
 
                                 <p className={styles.country__data}>
                                     <strong>Capital:</strong> {country?.capital}
