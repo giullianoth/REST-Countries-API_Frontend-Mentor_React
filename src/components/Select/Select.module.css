@@ -1,0 +1,23 @@
+.select {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.select select {    
+    appearance: none;
+    padding-right: 62px;
+}
+
+.select select:valid ~ svg {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.select svg {
+    position: absolute;
+    top: 50%;
+    right: 34px;
+    transform: translateY(-50%);
+    transition: var(--transition);
+    pointer-events: none;
+}

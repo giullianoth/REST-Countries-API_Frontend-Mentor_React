@@ -6,6 +6,7 @@ import Card from "../../components/Card"
 import { Link } from "react-router-dom"
 import APIServices from "../../api/api-services"
 import type { ICountry } from "../../interfaces/country"
+import Select from "../../components/Select"
 
 const Home = () => {
     const [query, setQuery] = useState<string>("")
@@ -54,16 +55,16 @@ const Home = () => {
                     </label>
 
                     <div className={styles.filter__by}>
-                        <select
+                        <Select
                             name="filter"
                             onChange={handleFilter}>
-                            <option>Filter by Region</option>
+                            <option value="">Filter by Region</option>
                             <option value="Africa">Africa</option>
                             <option value="Americas">Americas</option>
                             <option value="Asia">Asia</option>
                             <option value="Europe">Europe</option>
                             <option value="Oceania">Oceania</option>
-                        </select>
+                        </Select>
                     </div>
                 </Container>
             </section>
