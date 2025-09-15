@@ -4,9 +4,24 @@
     cursor: pointer;
 }
 
-.select select {    
-    appearance: none;
-    padding-right: 62px;
+.select select, .select ::picker(select) {
+    appearance: base-select;
+}
+
+.select select {
+    padding-inline: 20px 60px;
+}
+
+.select ::picker(select) {
+    border: none !important;
+    border-radius: 5px !important;
+    margin-top: 5px;
+    background-color: var(--color-background-elements);
+    color: var(--color-text);
+}
+
+.select select::picker-icon {
+    display: none;
 }
 
 .select select:open ~ svg {
@@ -16,8 +31,16 @@
 .select svg {
     position: absolute;
     top: 50%;
-    right: 34px;
+    right: 20px;
     transform: translateY(-50%);
     transition: var(--transition);
     pointer-events: none;
+}
+
+.select option {
+    padding: 10px 20px;
+}
+
+.select option::checkmark {
+    display: none;
 }

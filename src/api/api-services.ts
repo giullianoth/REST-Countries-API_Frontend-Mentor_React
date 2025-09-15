@@ -97,7 +97,18 @@ const APIServices = () => {
         return borderCountries
     }
 
-    return { loading, getAllCountries, getCountry, getBorderCountries }
+    const getCountriesByRegion = async (region: string) => {
+        const res = await getAllCountries()
+        const countriesByRegion = res?.filter(country => country.region === region)
+
+        if (!countriesByRegion) {
+            return []
+        }
+
+        return countriesByRegion
+    }
+
+    return { loading, getAllCountries, getCountry, getBorderCountries, getCountriesByRegion }
 }
 
 export default APIServices

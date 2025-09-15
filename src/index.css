@@ -88,10 +88,6 @@ input::placeholder {
   color: var(--color-white);
 }
 
-select, ::picker(select) {
-  border: none;
-}
-
 img {
   width: auto;
   max-width: 100%;

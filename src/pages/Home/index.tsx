@@ -12,13 +12,23 @@ const Home = () => {
     const [query, setQuery] = useState<string>("")
     const [filter, setFilter] = useState<string>("")
     const [countriesList, setCountriesList] = useState<ICountry[] | null>(null)
-    const { getAllCountries, loading } = APIServices()
+    const { getAllCountries, getCountriesByRegion, loading } = APIServices()
 
     useEffect(() => {
         const getData = async () => {
-            const data = await getAllCountries()
+            setCountriesList([])
 
-            if (data) {
+            let data: ICountry[] = []
+
+            if (!query && !filter) {
+                data = await getAllCountries() as ICountry[]
+            } else {
+                if (filter) {
+                    data = await getCountriesByRegion(filter)
+                }
+            }
+
+            if (data.length) {
                 setCountriesList(data)
             }
         }
@@ -29,12 +39,6 @@ const Home = () => {
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target
         setQuery(value)
-        console.log(value)
-    }
-
-    const handleFilter = (event: ChangeEvent<HTMLSelectElement>) => {
-        const { value } = event.target
-        setFilter(value)
         console.log(value)
     }
 
@@ -57,7 +61,7 @@ const Home = () => {
                     <div className={styles.filter__by}>
                         <Select
                             name="filter"
-                            onChange={handleFilter}>
+                            onChange={event => setFilter(event.target.value)}>
                             <option value="">Filter by Region</option>
                             <option value="Africa">Africa</option>
                             <option value="Americas">Americas</option>
