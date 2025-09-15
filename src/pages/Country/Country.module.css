@@ -18,6 +18,7 @@
 
 .country__flag img {
     width: 100%;
+    box-shadow: var(--shadow);
 }
 
 .country__info {
@@ -31,6 +32,7 @@
 }
 
 .country__border {
+    flex-basis: 100%;
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -60,7 +62,7 @@
     }
 
     .country__infoContent {
-        flex-basis: unset;
+        flex-basis: 50%;
     }
 }
 
@@ -84,7 +86,10 @@
 
     .country__border {
         flex-direction: row;
-        align-items: center;
+    }
+
+    .country__borderCountries {
+        justify-content: flex-start;
     }
 
     .country__borderCountries a {

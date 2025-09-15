@@ -25,8 +25,6 @@ const Home = () => {
         getData()
     }, [query, filter])
 
-    console.log(countriesList);
-
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target
         setQuery(value)
@@ -76,22 +74,10 @@ const Home = () => {
                         ? <p>Loading...</p>
 
                         : countriesList && countriesList.map(country => (
-                            <Link key={country.cca3} to={`/country/${country.cca3}`}>
+                            <Link key={country.cca3} to={`/country/${country.cca3.toLowerCase()}`} title={country.name.common}>
                                 <Card country={country} />
                             </Link>
                         ))}
-                    {/* <Link to="/country">
-                        <Card />
-                    </Link>
-                    <Link to="/country">
-                        <Card />
-                    </Link>
-                    <Link to="/country">
-                        <Card />
-                    </Link>
-                    <Link to="/country">
-                        <Card />
-                    </Link> */}
                 </Container>
             </section>
         </>

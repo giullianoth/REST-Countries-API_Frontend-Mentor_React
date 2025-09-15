@@ -1,19 +1,22 @@
-import type { ICurrencies } from "./currencies"
-import type { ILanguages } from "./languages"
-
 export interface ICountry {
-    borders: string[]
+    borders: ICountry[]
     capital: string[]
     cca3: string
-    currencies: ICurrencies
+    currencies: {
+        name: string,
+        symbol: string
+    }[]
     flags: {
         png: string,
         svg: string
     }
-    languages: ILanguages
+    languages: string[]
     name: {
         common: string
-        nativeName: ILanguages
+        nativeName: {
+            common: string
+            official: string
+        }
         official: string
     }
     population: number
