@@ -12,7 +12,7 @@ const Home = () => {
     const [query, setQuery] = useState<string>("")
     const [filter, setFilter] = useState<string>("")
     const [countriesList, setCountriesList] = useState<ICountry[] | null>(null)
-    const { getAllCountries, getCountriesByRegion, loading } = APIServices()
+    const { getAllCountries, getCountriesByRegion, searchCountries, loading } = APIServices()
 
     useEffect(() => {
         const getData = async () => {
@@ -26,6 +26,10 @@ const Home = () => {
                 if (filter) {
                     data = await getCountriesByRegion(filter)
                 }
+
+                if (query) {
+                    data = await searchCountries(query)
+                }
             }
 
             if (data.length) {
@@ -35,12 +39,6 @@ const Home = () => {
 
         getData()
     }, [query, filter])
-
-    const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target
-        setQuery(value)
-        console.log(value)
-    }
 
     return (
         <>
@@ -53,7 +51,7 @@ const Home = () => {
                             name="search"
                             placeholder="Search for a country..."
                             value={query}
-                            onChange={handleSearch} />
+                            onChange={event => setQuery(event.target.value)} />
 
                         <AiOutlineSearch />
                     </label>
@@ -78,11 +76,16 @@ const Home = () => {
                     {loading
                         ? <p>Loading...</p>
 
-                        : countriesList && countriesList.map(country => (
-                            <Link key={country.cca3} to={`/country/${country.cca3.toLowerCase()}`} title={country.name.common}>
-                                <Card country={country} />
-                            </Link>
-                        ))}
+                        : (countriesList && countriesList.length
+                            ? countriesList.map(country => (
+                                <Link key={country.cca3} to={`/country/${country.cca3.toLowerCase()}`} title={country.name.common}>
+                                    <Card country={country} />
+                                </Link>
+                            ))
+
+                            : <p>
+                                <strong>Your search returned no results.</strong>
+                            </p>)}
                 </Container>
             </section>
         </>
