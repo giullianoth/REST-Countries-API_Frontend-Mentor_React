@@ -9,7 +9,7 @@
     padding-right: 62px;
 }
 
-.select select:valid ~ svg {
+.select select:open ~ svg {
     transform: translateY(-50%) rotate(180deg);
 }
 
