@@ -13,7 +13,7 @@ const Home = () => {
     const [query, setQuery] = useState<string>("")
     const [filter, setFilter] = useState<string>("")
     const [countriesList, setCountriesList] = useState<ICountry[] | null>(null)
-    const { getAllCountries, getCountriesByRegion, searchCountries, loading } = APIServices()
+    const { getAllCountries, getCountriesByRegion, searchCountries, searchCountriesFilteredByRegion, loading } = APIServices()
 
     useEffect(() => {
         const getData = async () => {
@@ -23,14 +23,18 @@ const Home = () => {
 
             if (!query && !filter) {
                 data = await getAllCountries() as ICountry[]
-            } else {
-                if (filter) {
-                    data = await getCountriesByRegion(filter)
-                }
+            }
 
-                if (query) {
-                    data = await searchCountries(query)
-                }
+            if (query) {
+                data = await searchCountries(query)
+            }
+
+            if (filter) {
+                data = await getCountriesByRegion(filter)
+            }
+
+            if (query && filter) {
+                data = await searchCountriesFilteredByRegion(filter, query)
             }
 
             if (data.length) {
@@ -79,7 +83,10 @@ const Home = () => {
 
                         : (countriesList && countriesList.length
                             ? countriesList.map(country => (
-                                <Link key={country.cca3} to={`/country/${country.cca3.toLowerCase()}`} title={country.name.common}>
+                                <Link
+                                    key={country.cca3}
+                                    to={`/country/${country.cca3.toLowerCase()}`}
+                                    title={country.name.common}>
                                     <Card country={country} />
                                 </Link>
                             ))

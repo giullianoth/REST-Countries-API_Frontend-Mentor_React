@@ -103,7 +103,9 @@ const Country = () => {
                                                     key={borderCountry.cca3}
                                                     to={`/country/${borderCountry.cca3.toLowerCase()}`}
                                                     className="button"
-                                                    title={borderCountry.name.common}>{borderCountry.name.common}</Link>
+                                                    title={borderCountry.name.common}>
+                                                    {borderCountry.name.common}
+                                                </Link>
                                             ))}
                                         </div>
                                     </>

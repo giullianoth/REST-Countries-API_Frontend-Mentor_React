@@ -112,11 +112,18 @@ const APIServices = () => {
         const res = await getAllCountries()
 
         const foundCountries = res?.filter(country => {
-            return country.name.common.toLowerCase().includes(terms.toLowerCase())
+            return country.name.common.toLowerCase().includes(
+                terms.normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLowerCase())
                 || country.name.nativeName?.common?.toLowerCase()
                     .normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
-                    .includes(terms.toLowerCase())
+                    .includes(
+                        terms.toLowerCase()
+                            .normalize("NFD")
+                            .replace(/[\u0300-\u036f]/g, "")
+                    )
         })
 
         if (!foundCountries) {
@@ -126,7 +133,18 @@ const APIServices = () => {
         return foundCountries
     }
 
-    return { loading, getAllCountries, getCountry, getBorderCountries, getCountriesByRegion, searchCountries }
+    const searchCountriesFilteredByRegion = async (region: string, terms: string) => {
+        const resFiltered = await getCountriesByRegion(region)
+        const resSearch = await searchCountries(terms)
+
+        const filteredCountries = resFiltered.filter(filtered => {
+            return resSearch.some(found => found.cca3 === filtered.cca3)
+        })
+
+        return filteredCountries
+    }
+
+    return { loading, getAllCountries, getCountry, getBorderCountries, getCountriesByRegion, searchCountries, searchCountriesFilteredByRegion }
 }
 
 export default APIServices
