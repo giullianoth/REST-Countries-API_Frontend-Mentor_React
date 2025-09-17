@@ -20,7 +20,7 @@ const Country = () => {
             if (data) {
                 const borders = await getBorderCountries(data.borders)
                 setCountry(data)
-                setBorderCountries(borders)
+                setBorderCountries(borders as ICountry[])
             }
         }
 

@@ -18,6 +18,7 @@
     margin-top: 5px;
     background-color: var(--color-background-elements);
     color: var(--color-text);
+    box-shadow: var(--shadow);
 }
 
 .select select::picker-icon {
@@ -39,6 +40,7 @@
 
 .select option {
     padding: 10px 20px;
+    outline: none;
 }
 
 .select option::checkmark {

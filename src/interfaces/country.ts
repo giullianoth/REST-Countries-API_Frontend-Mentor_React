@@ -1,6 +1,6 @@
 export interface ICountry {
-    borders: ICountry[]
-    capital: string[]
+    borders: string[]
+    capital: string
     cca3: string
     currencies: {
         name: string,
