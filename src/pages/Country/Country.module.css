@@ -10,6 +10,10 @@
     margin-bottom: 60px;
 }
 
+.country__error {
+    text-align: center;
+}
+
 .country__details {
     display: flex;
     flex-direction: column;

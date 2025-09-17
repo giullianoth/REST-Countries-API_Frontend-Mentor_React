@@ -11,17 +11,21 @@ const Country = () => {
     const { code } = useParams()
     const [country, setCountry] = useState<ICountry | null>(null)
     const [borderCountries, setBorderCountries] = useState<ICountry[] | null>(null)
+    const [error, setError] = useState<boolean>(false)
     const { getCountry, getBorderCountries, loading } = APIServices()
 
     useEffect(() => {
         const getData = async () => {
             const data = await getCountry(code as string)
 
-            if (data) {
-                const borders = await getBorderCountries(data.borders)
-                setCountry(data)
-                setBorderCountries(borders as ICountry[])
+            if (!data) {
+                setError(true)
+                return
             }
+
+            const borders = await getBorderCountries(data.borders)
+            setCountry(data)
+            setBorderCountries(borders as ICountry[])
         }
 
         getData()
@@ -40,82 +44,88 @@ const Country = () => {
                 {loading
                     ? <Loading />
 
-                    : <div className={styles.country__details}>
-                        <div className={styles.country__flag}>
-                            <img src={country?.flags.svg} alt={country?.name.common} />
-                        </div>
+                    : (error
+                        ? <p className={styles.country__error}>
+                            <strong>Invalid request.</strong>
+                        </p>
 
-                        <div className={styles.country__info}>
-                            <header className={styles.country__name}>
-                                <h2>{country?.name.common}</h2>
-                            </header>
+                        : <div className={styles.country__details}>
+                            <div className={styles.country__flag}>
+                                <img src={country?.flags.svg} alt={country?.name.common} />
+                            </div>
 
-                            <div className={styles.country__infoContent}>
-                                {country?.name.nativeName &&
+                            <div className={styles.country__info}>
+                                <header className={styles.country__name}>
+                                    <h2>{country?.name.common}</h2>
+                                </header>
+
+                                <div className={styles.country__infoContent}>
+                                    {country?.name.nativeName &&
+                                        <p className={styles.country__data}>
+                                            <strong>Native Name:</strong> {country?.name.nativeName.common}
+                                        </p>}
+
                                     <p className={styles.country__data}>
-                                        <strong>Native Name:</strong> {country?.name.nativeName.common}
-                                    </p>}
+                                        <strong>Population:</strong> {new Intl.NumberFormat().format(country?.population!)}
+                                    </p>
 
-                                <p className={styles.country__data}>
-                                    <strong>Population:</strong> {new Intl.NumberFormat().format(country?.population!)}
-                                </p>
-
-                                <p className={styles.country__data}>
-                                    <strong>Region:</strong> {country?.region}
-                                </p>
-
-                                {country?.subregion &&
                                     <p className={styles.country__data}>
-                                        <strong>Sub Region:</strong> {country?.subregion}
-                                    </p>}
+                                        <strong>Region:</strong> {country?.region}
+                                    </p>
 
-                                <p className={styles.country__data}>
-                                    <strong>Capital:</strong> {country?.capital}
-                                </p>
-                            </div>
+                                    {country?.subregion &&
+                                        <p className={styles.country__data}>
+                                            <strong>Sub Region:</strong> {country?.subregion}
+                                        </p>}
 
-                            <div className={styles.country__infoContent}>
-                                <p className={styles.country__data}>
-                                    <strong>Top Level Domain:</strong> {country?.tld.join(", ")}
-                                </p>
+                                    <p className={styles.country__data}>
+                                        <strong>Capital:</strong> {country?.capital}
+                                    </p>
+                                </div>
 
-                                <p className={styles.country__data}>
-                                    <strong>Currencies:</strong>&nbsp;
-                                    {country?.currencies.map(currency => `${currency.name} (${currency.symbol})`).join(", ")}
-                                </p>
+                                <div className={styles.country__infoContent}>
+                                    <p className={styles.country__data}>
+                                        <strong>Top Level Domain:</strong> {country?.tld.join(", ")}
+                                    </p>
 
-                                <p className={styles.country__data}>
-                                    <strong>Languages:</strong> {country?.languages.join(", ")}
-                                </p>
-                            </div>
+                                    <p className={styles.country__data}>
+                                        <strong>Currencies:</strong>&nbsp;
+                                        {country?.currencies.map(currency => `${currency.name} (${currency.symbol})`).join(", ")}
+                                    </p>
 
-                            <div className={styles.country__border}>
-                                {borderCountries?.length
+                                    <p className={styles.country__data}>
+                                        <strong>Languages:</strong> {country?.languages.join(", ")}
+                                    </p>
+                                </div>
 
-                                    ? <>
-                                        <p>
-                                            <strong>Border Countries:</strong>
-                                        </p>
+                                <div className={styles.country__border}>
+                                    {borderCountries?.length
 
-                                        <div className={styles.country__borderCountries}>
-                                            {borderCountries.map(borderCountry => (
-                                                <Link
-                                                    key={borderCountry.cca3}
-                                                    to={`/country/${borderCountry.cca3.toLowerCase()}`}
-                                                    className="button"
-                                                    title={borderCountry.name.common}>
-                                                    {borderCountry.name.common}
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    </>
+                                        ? <>
+                                            <p>
+                                                <strong>Border Countries:</strong>
+                                            </p>
 
-                                    : <p>
-                                        <strong>No Border Countries</strong>
-                                    </p>}
+                                            <div className={styles.country__borderCountries}>
+                                                {borderCountries.map(borderCountry => (
+                                                    <Link
+                                                        key={borderCountry.cca3}
+                                                        to={`/country/${borderCountry.cca3.toLowerCase()}`}
+                                                        className="button"
+                                                        title={borderCountry.name.common}>
+                                                        {borderCountry.name.common}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </>
+
+                                        : <p>
+                                            <strong>No Border Countries</strong>
+                                        </p>}
+                                </div>
                             </div>
                         </div>
-                    </div>}
+                    )}
             </Container>
         </section>
     )
