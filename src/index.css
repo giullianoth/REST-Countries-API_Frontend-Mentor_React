@@ -18,7 +18,7 @@
   --color-text: var(--color-white);
 
   /* Shadow */
-  --shadow: 0 0 10px hsla(200, 15%, 8%, 0.3);
+  --shadow: 0 0 3px 1px hsla(200, 15%, 8%, 0.2);
 
   /* TYPOGRAPHY */
   /* Body Copy */
