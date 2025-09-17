@@ -1,5 +1,5 @@
 import { useState } from "react"
-import type { ILanguages } from "../interfaces/languages"
+import type { ICountry } from "../interfaces/country"
 
 const apiUrl: string = "https://restcountries.com/v3.1"
 const fields1: string[] = ["flags", "name", "population", "region", "subregion"]
@@ -9,7 +9,7 @@ const fields: string[] = fields1.concat(fields2)
 const APIServices = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
-    const processedData = (data: any) => {
+    const processedData = (data: any): ICountry | undefined => {
         if (typeof data !== "object") {
             return undefined
         }
@@ -17,7 +17,7 @@ const APIServices = () => {
         const languageKeys = Object.keys(data.languages!)
         const currenciesKeys = Object.keys(data.currencies)
 
-        const name = data.name.nativeName[languageKeys[0] as keyof ILanguages]
+        const name = data.name.nativeName[languageKeys[0]]
         const languages = languageKeys.map(key => data.languages[key])
 
         const currencies = currenciesKeys.map(key => ({
@@ -88,7 +88,7 @@ const APIServices = () => {
 
     const getBorderCountries = async (borders: string[]) => {
         const res = await getAllCountries()
-        const borderCountries = res?.filter(country => borders.some(border => border === country.cca3))
+        const borderCountries = res?.filter(country => borders.some(border => border === country?.cca3))
 
         if (!borderCountries) {
             return []
@@ -99,7 +99,7 @@ const APIServices = () => {
 
     const getCountriesByRegion = async (region: string) => {
         const res = await getAllCountries()
-        const countriesByRegion = res?.filter(country => country.region === region)
+        const countriesByRegion = res?.filter(country => country?.region === region)
 
         if (!countriesByRegion) {
             return []
@@ -112,11 +112,11 @@ const APIServices = () => {
         const res = await getAllCountries()
 
         const foundCountries = res?.filter(country => {
-            return country.name.common.toLowerCase().includes(
+            return country?.name.common.toLowerCase().includes(
                 terms.normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
                     .toLowerCase())
-                || country.name.nativeName?.common?.toLowerCase()
+                || country?.name.nativeName?.common?.toLowerCase()
                     .normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
                     .includes(
@@ -138,7 +138,7 @@ const APIServices = () => {
         const resSearch = await searchCountries(terms)
 
         const filteredCountries = resFiltered.filter(filtered => {
-            return resSearch.some(found => found.cca3 === filtered.cca3)
+            return resSearch.some(found => found?.cca3 === filtered?.cca3)
         })
 
         return filteredCountries

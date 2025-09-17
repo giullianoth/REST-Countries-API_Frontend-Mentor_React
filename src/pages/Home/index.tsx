@@ -26,15 +26,15 @@ const Home = () => {
             }
 
             if (query) {
-                data = await searchCountries(query)
+                data = (await searchCountries(query) as ICountry[])
             }
 
             if (filter) {
-                data = await getCountriesByRegion(filter)
+                data = (await getCountriesByRegion(filter)) as ICountry[]
             }
 
             if (query && filter) {
-                data = await searchCountriesFilteredByRegion(filter, query)
+                data = (await searchCountriesFilteredByRegion(filter, query)) as ICountry[]
             }
 
             if (data.length) {
