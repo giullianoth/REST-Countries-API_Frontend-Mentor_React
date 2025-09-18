@@ -87,14 +87,22 @@ const APIServices = () => {
     }
 
     const getBorderCountries = async (borders: string[]) => {
-        const res = await getAllCountries()
-        const borderCountries = res?.filter(country => borders.some(border => border === country?.cca3))
+        setLoading(true)
+        borders = borders.map(border => border.toLowerCase())
 
-        if (!borderCountries) {
-            return []
+        try {
+            const res = await fetch(`${apiUrl}/alpha?codes=${borders.join(",")}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            }).then(res => res.json())
+                .catch(err => err)
+
+            setLoading(false)
+            return Array.from(res).map(item => processedData(item))
+        } catch (error) {
+            setLoading(false)
+            console.error(error)
         }
-
-        return borderCountries
     }
 
     const getCountriesByRegion = async (region: string) => {
