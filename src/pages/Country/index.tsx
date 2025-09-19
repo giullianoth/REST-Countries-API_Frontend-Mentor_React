@@ -100,7 +100,6 @@ const Country = () => {
 
                                 <div className={styles.country__border}>
                                     {borderCountries?.length
-
                                         ? <>
                                             <p>
                                                 <strong>Border Countries:</strong>

@@ -14,7 +14,7 @@ const APIServices = () => {
             return undefined
         }
 
-        const languageKeys = Object.keys(data.languages!)
+        const languageKeys = Object.keys(data.languages)
         const currenciesKeys = Object.keys(data.currencies)
 
         const name = data.name.nativeName[languageKeys[0]]
@@ -87,6 +87,10 @@ const APIServices = () => {
     }
 
     const getBorderCountries = async (borders: string[]) => {
+        if (!borders.length) {
+            return []
+        }
+
         setLoading(true)
         borders = borders.map(border => border.toLowerCase())
 
@@ -106,29 +110,54 @@ const APIServices = () => {
     }
 
     const getCountriesByRegion = async (region: string) => {
-        const res = await getAllCountries()
-        const countriesByRegion = res?.filter(country => country?.region === region)
+        setLoading(true)
+        region = region.toLowerCase()
 
-        if (!countriesByRegion) {
-            return []
+        try {
+            const res = await fetch(`${apiUrl}/region/${region}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            }).then(res => res.json())
+                .catch(err => err)
+
+            setLoading(false)
+            return Array.from(res).map(item => processedData(item))
+        } catch (error) {
+            setLoading(false)
+            console.error(error)
         }
-
-        return countriesByRegion
     }
 
-    const searchCountries = async (terms: string) => {
+    const searchCountries = async (name: string) => {
+        // setLoading(true)
+        // name = name.toLowerCase()
+
+        // try {
+        //     const res = await fetch(`${apiUrl}/name/${name}`, {
+        //         method: "GET",
+        //         headers: { "Content-Type": "application/json" }
+        //     }).then(res => res.json())
+        //         .catch(err => err)
+
+        //     setLoading(false)
+        //     return Array.from(res).map(item => processedData(item))
+        // } catch (error) {
+        //     setLoading(false)
+        //     console.error(error)
+        // }
+
         const res = await getAllCountries()
 
         const foundCountries = res?.filter(country => {
             return country?.name.common.toLowerCase().includes(
-                terms.normalize("NFD")
+                name.normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
                     .toLowerCase())
                 || country?.name.nativeName?.common?.toLowerCase()
                     .normalize("NFD")
                     .replace(/[\u0300-\u036f]/g, "")
                     .includes(
-                        terms.toLowerCase()
+                        name.toLowerCase()
                             .normalize("NFD")
                             .replace(/[\u0300-\u036f]/g, "")
                     )
@@ -145,8 +174,8 @@ const APIServices = () => {
         const resFiltered = await getCountriesByRegion(region)
         const resSearch = await searchCountries(terms)
 
-        const filteredCountries = resFiltered.filter(filtered => {
-            return resSearch.some(found => found?.cca3 === filtered?.cca3)
+        const filteredCountries = resFiltered?.filter(filtered => {
+            return resSearch?.some(found => found?.cca3 === filtered?.cca3)
         })
 
         return filteredCountries
