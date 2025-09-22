@@ -25,13 +25,26 @@
 .filter__search svg {
     position: absolute;
     top: 50%;
-    left: 34px;
     transform: translateY(-50%);
+}
+
+.filter__iconSearch {
+    left: 34px;
     font-size: 1.2em;
 }
 
-.filter__search input:valid ~ svg {
+.filter__iconClear {
+    right: 0;
+    cursor: pointer;
     display: none;
+}
+
+.filter__search input:valid ~ .filter__iconSearch {
+    display: none;
+}
+
+.filter__search input:valid ~ .filter__iconClear {
+    display: block;
 }
 
 .filter__by select {

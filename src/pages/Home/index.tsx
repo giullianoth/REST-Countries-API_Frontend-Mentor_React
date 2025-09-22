@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Container from "../../components/Container"
 import styles from "./Home.module.css"
-import { AiOutlineSearch } from "react-icons/ai"
+import { AiOutlineClose, AiOutlineSearch } from "react-icons/ai"
 import Card from "../../components/Card"
 import { Link } from "react-router-dom"
 import APIServices from "../../api/api-services"
@@ -58,7 +58,12 @@ const Home = () => {
                             value={query}
                             onChange={event => setQuery(event.target.value)} />
 
-                        <AiOutlineSearch />
+                        <AiOutlineSearch className={styles.filter__iconSearch} />
+
+                        <AiOutlineClose
+                            className={styles.filter__iconClear}
+                            title="Clear Search"
+                            onClick={() => setQuery("")} />
                     </label>
 
                     <div className={styles.filter__by}>
