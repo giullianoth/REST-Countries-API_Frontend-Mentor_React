@@ -4,6 +4,7 @@ import { useWindowBehavior } from "../../hooks/window-behavior"
 import { useChangeTheme } from "../../hooks/change-theme"
 import { useState } from "react"
 import { AiFillMoon, AiOutlineMoon } from "react-icons/ai"
+import { Link } from "react-router-dom"
 
 const Header = () => {
     const [theme, setTheme] = useState<"dark" | "light">("dark")
@@ -18,7 +19,9 @@ const Header = () => {
     return (
         <header className={styles.header + (scrolling ? ` ${styles.scrolling}` : "")}>
             <Container className={styles.header__container}>
-                <h1 className={styles.header__title}>Where in the world?</h1>
+                <h1 className={styles.header__title}>
+                    <Link to="/">Where in the world?</Link>
+                </h1>
 
                 <div className={styles.header__theme}>
                     <button className="button clear" onClick={handleChangeTheme}>
