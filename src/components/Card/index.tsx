@@ -9,7 +9,9 @@ const Card = ({ country }: Props) => {
     return (
         <article className={styles.card}>
             <div className={styles.card__flag}>
-                <img src={country.flags.png} alt={country.name.common} />
+                <img
+                    src={country.flags.png}
+                    alt={country.flags.alt ? country.flags.alt : country.name.common} />
             </div>
 
             <div className={styles.card__info}>

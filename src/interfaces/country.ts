@@ -8,7 +8,8 @@ export interface ICountry {
     }[]
     flags: {
         png: string,
-        svg: string
+        svg: string,
+        alt: string
     }
     languages: string[]
     name: {

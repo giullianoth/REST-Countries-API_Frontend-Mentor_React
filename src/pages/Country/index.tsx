@@ -31,6 +31,8 @@ const Country = () => {
         getData()
     }, [code])
 
+    console.log(country);
+
     return (
         <section className={styles.country}>
             <Container className={styles.country__container}>
@@ -51,7 +53,9 @@ const Country = () => {
 
                         : <div className={styles.country__details}>
                             <div className={styles.country__flag}>
-                                <img src={country?.flags.svg} alt={country?.name.common} />
+                                <img
+                                    src={country?.flags.svg}
+                                    alt={country?.flags.alt ? country.flags.alt : country?.name.common} />
                             </div>
 
                             <div className={styles.country__info}>
