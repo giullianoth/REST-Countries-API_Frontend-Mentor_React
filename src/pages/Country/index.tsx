@@ -31,8 +31,6 @@ const Country = () => {
         getData()
     }, [code])
 
-    console.log(country);
-
     return (
         <section className={styles.country}>
             <Container className={styles.country__container}>
