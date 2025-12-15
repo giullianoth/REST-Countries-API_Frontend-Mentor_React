@@ -15,35 +15,47 @@ const Home = () => {
     const [countriesList, setCountriesList] = useState<ICountry[] | null>(null)
     const { getAllCountries, getCountriesByRegion, searchCountries, searchCountriesFilteredByRegion, loading } = APIServices()
 
+    const regionOptions = [
+        { value: "Africa", label: "Africa" },
+        { value: "Americas", label: "Americas" },
+        { value: "Asia", label: "Asia" },
+        { value: "Europe", label: "Europe" },
+        { value: "Oceania", label: "Oceania" },
+    ]
+
     useEffect(() => {
         const getData = async () => {
             setCountriesList([])
 
-            let data: ICountry[] = []
+            let data: (ICountry | undefined)[] | undefined
 
             if (!search && !region) {
-                data = await getAllCountries() as ICountry[]
+                data = await getAllCountries()
             }
 
             if (search) {
-                data = (await searchCountries(search) as ICountry[])
+                data = (await searchCountries(search))
             }
 
             if (region) {
-                data = (await getCountriesByRegion(region)) as ICountry[]
+                data = (await getCountriesByRegion(region))
             }
 
             if (search && region) {
-                data = (await searchCountriesFilteredByRegion(region, search)) as ICountry[]
+                data = (await searchCountriesFilteredByRegion(region, search))
             }
 
-            if (data.length) {
-                setCountriesList(data)
+            if (data && data.length) {
+                setCountriesList(data as ICountry[])
             }
         }
 
         getData()
     }, [search, region])
+
+    const handleRegionChange = (newRegion: string) => {
+        setRegion(newRegion);
+    }
 
     return (
         <>
@@ -68,15 +80,10 @@ const Home = () => {
 
                     <div className={styles.filter__by}>
                         <Select
-                            name="region"
-                            onChange={event => setRegion(event.target.value)}>
-                            <option value="">Filter by Region</option>
-                            <option value="Africa">Africa</option>
-                            <option value="Americas">Americas</option>
-                            <option value="Asia">Asia</option>
-                            <option value="Europe">Europe</option>
-                            <option value="Oceania">Oceania</option>
-                        </Select>
+                            options={regionOptions}
+                            value={region}
+                            onChange={handleRegionChange} // Passa a função de atualização
+                            placeholder="Filter by Region" />
                     </div>
                 </Container>
             </section>

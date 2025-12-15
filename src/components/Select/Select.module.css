@@ -2,17 +2,12 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
+    font-weight: var(--font-weight-semibold);
+    min-width: 200px;
 }
 
-.select select, .select ::picker(select) {
-    appearance: base-select;
-}
-
-.select select {
-    padding-inline: 20px 60px;
-}
-
-.select ::picker(select) {
+.select__header {
+    padding: 20px 60px 20px 34px;
     border: none !important;
     border-radius: 5px !important;
     margin-top: 5px;
@@ -21,15 +16,7 @@
     box-shadow: var(--shadow);
 }
 
-.select select::picker-icon {
-    display: none;
-}
-
-.select select:open ~ svg {
-    transform: translateY(-50%) rotate(180deg);
-}
-
-.select svg {
+.select__icon {
     position: absolute;
     top: 50%;
     right: 20px;
@@ -38,11 +25,32 @@
     pointer-events: none;
 }
 
-.select option {
-    padding: 10px 20px;
-    outline: none;
+.select__iconOpen {
+    transform: translateY(-50%) rotate(180deg);
 }
 
-.select option::checkmark {
-    display: none;
+.select__dropdown {
+    min-width: 100%;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+}
+
+.select__list {
+    overflow: hidden;
+    background-color: var(--color-background-elements);
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    min-width: 100%;
+}
+
+.select__option {
+    padding: 10px 20px;
+    transition: var(--transition);
+    min-width: 100%;
+}
+
+.select__option:hover,
+.select__option.selected {
+    background-color: var(--color-background);
 }
