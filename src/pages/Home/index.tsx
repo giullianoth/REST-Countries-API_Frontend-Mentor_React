@@ -82,7 +82,7 @@ const Home = () => {
                         <Select
                             options={regionOptions}
                             value={region}
-                            onChange={handleRegionChange} // Passa a função de atualização
+                            onChange={handleRegionChange}
                             placeholder="Filter by Region" />
                     </div>
                 </Container>
