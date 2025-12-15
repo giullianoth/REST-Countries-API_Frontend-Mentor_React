@@ -80,9 +80,10 @@ const Country = () => {
                                             <strong>Sub Region:</strong> {country?.subregion}
                                         </p>}
 
-                                    <p className={styles.country__data}>
-                                        <strong>Capital:</strong> {country?.capital}
-                                    </p>
+                                    {country?.capital && country.capital.length > 0 &&
+                                        <p className={styles.country__data}>
+                                            <strong>Capital:</strong> {country?.capital.join(", ")}
+                                        </p>}
                                 </div>
 
                                 <div className={styles.country__infoContent}>
@@ -90,14 +91,16 @@ const Country = () => {
                                         <strong>Top Level Domain:</strong> {country?.tld.join(", ")}
                                     </p>
 
-                                    <p className={styles.country__data}>
-                                        <strong>Currencies:</strong>&nbsp;
-                                        {country?.currencies.map(currency => `${currency.name} (${currency.symbol})`).join(", ")}
-                                    </p>
+                                    {country?.currencies && country.currencies.length > 0 &&
+                                        <p className={styles.country__data}>
+                                            <strong>Currencies:</strong>&nbsp;
+                                            {country?.currencies.map(currency => `${currency.name} (${currency.symbol})`).join(", ")}
+                                        </p>}
 
-                                    <p className={styles.country__data}>
-                                        <strong>Languages:</strong> {country?.languages.join(", ")}
-                                    </p>
+                                    {country?.languages && country.languages.length > 0 &&
+                                        <p className={styles.country__data}>
+                                            <strong>Languages:</strong> {country?.languages.join(", ")}
+                                        </p>}
                                 </div>
 
                                 <div className={styles.country__border}>

@@ -10,8 +10,8 @@ import Select from "../../components/Select"
 import Loading from "../../components/Loading"
 
 const Home = () => {
-    const [query, setQuery] = useState<string>("")
-    const [filter, setFilter] = useState<string>("")
+    const [search, setSearch] = useState<string>("")
+    const [region, setRegion] = useState<string>("")
     const [countriesList, setCountriesList] = useState<ICountry[] | null>(null)
     const { getAllCountries, getCountriesByRegion, searchCountries, searchCountriesFilteredByRegion, loading } = APIServices()
 
@@ -21,20 +21,20 @@ const Home = () => {
 
             let data: ICountry[] = []
 
-            if (!query && !filter) {
+            if (!search && !region) {
                 data = await getAllCountries() as ICountry[]
             }
 
-            if (query) {
-                data = (await searchCountries(query) as ICountry[])
+            if (search) {
+                data = (await searchCountries(search) as ICountry[])
             }
 
-            if (filter) {
-                data = (await getCountriesByRegion(filter)) as ICountry[]
+            if (region) {
+                data = (await getCountriesByRegion(region)) as ICountry[]
             }
 
-            if (query && filter) {
-                data = (await searchCountriesFilteredByRegion(filter, query)) as ICountry[]
+            if (search && region) {
+                data = (await searchCountriesFilteredByRegion(region, search)) as ICountry[]
             }
 
             if (data.length) {
@@ -43,7 +43,7 @@ const Home = () => {
         }
 
         getData()
-    }, [query, filter])
+    }, [search, region])
 
     return (
         <>
@@ -55,21 +55,21 @@ const Home = () => {
                             type="text"
                             name="search"
                             placeholder="Search for a country..."
-                            value={query}
-                            onChange={event => setQuery(event.target.value)} />
+                            value={search}
+                            onChange={event => setSearch(event.target.value)} />
 
                         <AiOutlineSearch className={styles.filter__iconSearch} />
 
                         <AiOutlineClose
                             className={styles.filter__iconClear}
                             title="Clear Search"
-                            onClick={() => setQuery("")} />
+                            onClick={() => setSearch("")} />
                     </label>
 
                     <div className={styles.filter__by}>
                         <Select
-                            name="filter"
-                            onChange={event => setFilter(event.target.value)}>
+                            name="region"
+                            onChange={event => setRegion(event.target.value)}>
                             <option value="">Filter by Region</option>
                             <option value="Africa">Africa</option>
                             <option value="Americas">Americas</option>

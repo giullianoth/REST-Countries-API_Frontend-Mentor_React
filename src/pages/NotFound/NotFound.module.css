@@ -1,0 +1,8 @@
+.notFound {
+    margin-block: 40px;
+    text-align: center;
+}
+
+.notFound p:first-child {
+    margin-bottom: 20px;
+}

@@ -27,9 +27,10 @@ const Card = ({ country }: Props) => {
                     <strong>Region:</strong> {country.region}
                 </p>
 
-                <p className={styles.card__data}>
-                    <strong>Capital:</strong> {country.capital}
-                </p>
+                {country.capital && country.capital.length > 0 &&
+                    <p className={styles.card__data}>
+                        <strong>Capital:</strong> {country.capital.join(", ")}
+                    </p>}
             </div>
         </article>
     )

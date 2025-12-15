@@ -16,11 +16,18 @@
 
 .filter__search input {
     width: 100%;
-}
-
-.filter__search input::placeholder {
     padding-left: 40px;
 }
+
+.filter__search input:valid {
+    padding-left: 20px;
+}
+
+/* .filter__search input::placeholder,
+.filter__search input::-webkit-input-placeholder,
+.filter__search input:-moz-placeholder {
+    padding-left: 40px;
+} */
 
 .filter__search svg {
     position: absolute;
@@ -31,6 +38,7 @@
 .filter__iconSearch {
     left: 34px;
     font-size: 1.2em;
+    margin-left: -20px;
 }
 
 .filter__iconClear {
