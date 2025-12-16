@@ -19,8 +19,8 @@ const Select = ({ options, value, onChange, placeholder = "Filter by Region" }: 
     const [isOpen, setIsOpen] = useState(false)
     const selectRef = useRef<HTMLLabelElement | null>(null)
 
-    const selectedOption = useMemo(() =>
-        options.find(opt => opt.value === value) || { label: placeholder, value: "" },
+    const selectedOption = useMemo(
+        () => options.find(opt => opt.value === value) || { label: placeholder, value: "" },
         [options, value, placeholder]
     )
 

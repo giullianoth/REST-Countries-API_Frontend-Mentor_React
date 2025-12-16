@@ -54,7 +54,7 @@ const Home = () => {
     }, [search, region])
 
     const handleRegionChange = (newRegion: string) => {
-        setRegion(newRegion);
+        setRegion(newRegion)
     }
 
     return (

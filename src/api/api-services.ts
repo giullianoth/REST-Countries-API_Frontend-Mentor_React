@@ -9,7 +9,7 @@ const fields: string[] = fields1.concat(fields2)
 const APIServices = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
-    const processedData = (data: any): ICountry | undefined => {
+    const processedData = (data: any) => {
         if (typeof data !== "object") {
             return undefined
         }
@@ -33,7 +33,7 @@ const APIServices = () => {
                 ...data.name,
                 nativeName: name
             }
-        }
+        } as ICountry
     }
 
     const getAllCountries = async () => {
