@@ -18,7 +18,6 @@ const NotFound = () => {
                 </p>
 
                 <p>
-
                     <button className="button" onClick={handleReturnToPage}>
                         <AiOutlineArrowLeft />
                         Back
