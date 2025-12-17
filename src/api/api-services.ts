@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import type { ICountry } from "../interfaces/country"
 
 const apiUrl: string = "https://restcountries.com/v3.1"
@@ -10,14 +10,14 @@ const APIServices = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const processedData = (data: any) => {
-        if (typeof data !== "object") {
+        if (typeof data !== "object" || !data.languages || !data.currencies) {
             return undefined
         }
 
         const languageKeys = Object.keys(data.languages)
         const currenciesKeys = Object.keys(data.currencies)
 
-        const name = data.name.nativeName[languageKeys[0]]
+        const name = data.name.nativeName[languageKeys[0]] || data.name
         const languages = languageKeys.map(key => data.languages[key])
 
         const currencies = currenciesKeys.map(key => ({
@@ -36,57 +36,46 @@ const APIServices = () => {
         } as ICountry
     }
 
-    const getAllCountries = async () => {
+    const getAllCountries = useCallback(async () => {
         setLoading(true)
 
         try {
-            const res1 = await fetch(`${apiUrl}/all?fields=${fields1.join(",")}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            }).then(res => res.json())
-                .catch(err => err)
-
-            const res2 = await fetch(`${apiUrl}/all?fields=${fields2.join(",")}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            }).then(res => res.json())
-                .catch(err => err)
+            const [res1, res2] = await Promise.all([
+                fetch(`${apiUrl}/all?fields=${fields1.join(",")}`).then(res => res.json()),
+                fetch(`${apiUrl}/all?fields=${fields2.join(",")}`).then(res => res.json())
+            ])
 
             if (!res1 || !res2) {
                 throw new Error("Error during fetch countries.")
             }
 
-            setLoading(false)
-
-            return Array.from(res1).map((item, index) => processedData({
-                ...item as object,
+            const data = Array.from(res1).map((item, index) => processedData({
+                ...(item as object),
                 ...res2[index]
             }))
+
+            setLoading(false)
+            return data
         } catch (error) {
             setLoading(false)
             console.error(error)
         }
-    }
+    }, [])
 
-    const getCountry = async (code: string) => {
+    const getCountry = useCallback(async (code: string) => {
         setLoading(true)
 
         try {
-            const res = await fetch(`${apiUrl}/alpha/${code}?fields=${fields.join(",")}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            }).then(res => res.json())
-                .catch(err => err)
-
+            const res = await fetch(`${apiUrl}/alpha/${code}?fields=${fields.join(",")}`).then(res => res.json())
             setLoading(false)
             return processedData(res)
         } catch (error) {
             setLoading(false)
             console.error(error)
         }
-    }
+    }, [])
 
-    const getBorderCountries = async (borders: string[]) => {
+    const getBorderCountries = useCallback(async (borders: string[]) => {
         if (!borders.length) {
             return []
         }
@@ -95,91 +84,69 @@ const APIServices = () => {
         borders = borders.map(border => border.toLowerCase())
 
         try {
-            const res = await fetch(`${apiUrl}/alpha?codes=${borders.join(",")}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            }).then(res => res.json())
-                .catch(err => err)
+            const res = await fetch(`${apiUrl}/alpha?codes=${borders.join(",")}`).then(res => res.json())
+            const data = Array.from(res).map(item => processedData(item))
 
             setLoading(false)
-            return Array.from(res).map(item => processedData(item))
+            return data
         } catch (error) {
             setLoading(false)
             console.error(error)
         }
-    }
+    }, [])
 
-    const getCountriesByRegion = async (region: string) => {
+    const getCountriesByRegion = useCallback(async (region: string) => {
         setLoading(true)
         region = region.toLowerCase()
 
         try {
-            const res = await fetch(`${apiUrl}/region/${region}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json" }
-            }).then(res => res.json())
-                .catch(err => err)
+            const res = await fetch(`${apiUrl}/region/${region}`).then(res => res.json())
+            const data = Array.from(res).map(item => processedData(item))
 
             setLoading(false)
-            return Array.from(res).map(item => processedData(item))
+            return data
         } catch (error) {
             setLoading(false)
             console.error(error)
         }
-    }
+    }, [])
 
-    const searchCountries = async (name: string) => {
+    const searchCountries = useCallback(async (name: string) => {
         // setLoading(true)
         // name = name.toLowerCase()
 
         // try {
-        //     const res = await fetch(`${apiUrl}/name/${name}`, {
-        //         method: "GET",
-        //         headers: { "Content-Type": "application/json" }
-        //     }).then(res => res.json())
-        //         .catch(err => err)
+        //     const res = await fetch(`${apiUrl}/name/${name}`).then(res => res.json())
+        //     const data = Array.from(res).map(item => processedData(item))
 
         //     setLoading(false)
-        //     return Array.from(res).map(item => processedData(item))
+        //     return data
         // } catch (error) {
         //     setLoading(false)
         //     console.error(error)
         // }
 
         const res = await getAllCountries()
+        const accentuation = /[\u0300-\u036f]/g
+        const searchTerms = name.normalize("NFD").replace(accentuation, "").toLowerCase()
 
         const foundCountries = res?.filter(country => {
-            return country?.name.common.toLowerCase().includes(
-                name.normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .toLowerCase())
-                || country?.name.nativeName?.common?.toLowerCase()
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .includes(
-                        name.toLowerCase()
-                            .normalize("NFD")
-                            .replace(/[\u0300-\u036f]/g, "")
-                    )
+            const commonName = country?.name.common.normalize("NFD").replace(accentuation, "").toLowerCase()
+            const nativeName = country?.name.nativeName?.common?.normalize("NFD").replace(accentuation, "").toLowerCase()
+            return commonName?.includes(searchTerms) || nativeName?.includes(searchTerms)
         })
 
-        if (!foundCountries) {
-            return []
-        }
+        return foundCountries || []
+    }, [getAllCountries])
 
-        return foundCountries
-    }
+    const searchCountriesFilteredByRegion = useCallback(async (region: string, terms: string) => {
+        const [resFiltered, resSearch] = await Promise.all([
+            getCountriesByRegion(region),
+            searchCountries(terms)
+        ])
 
-    const searchCountriesFilteredByRegion = async (region: string, terms: string) => {
-        const resFiltered = await getCountriesByRegion(region)
-        const resSearch = await searchCountries(terms)
-
-        const filteredCountries = resFiltered?.filter(filtered => {
-            return resSearch?.some(found => found?.cca3 === filtered?.cca3)
-        })
-
-        return filteredCountries
-    }
+        return resFiltered?.filter(filtered => resSearch?.some(found => found?.cca3 === filtered?.cca3)) || []
+    }, [getCountriesByRegion, searchCountries])
 
     return { loading, getAllCountries, getCountry, getBorderCountries, getCountriesByRegion, searchCountries, searchCountriesFilteredByRegion }
 }

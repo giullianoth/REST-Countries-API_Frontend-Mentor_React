@@ -31,18 +31,12 @@ const Home = () => {
 
             if (!search && !region) {
                 data = await getAllCountries()
-            }
-
-            if (search) {
-                data = (await searchCountries(search))
-            }
-
-            if (region) {
-                data = (await getCountriesByRegion(region))
-            }
-
-            if (search && region) {
+            } else if (search && region) {
                 data = (await searchCountriesFilteredByRegion(region, search))
+            } else if (search) {
+                data = (await searchCountries(search))
+            } else if (region) {
+                data = (await getCountriesByRegion(region))
             }
 
             if (data && data.length) {
@@ -51,7 +45,14 @@ const Home = () => {
         }
 
         getData()
-    }, [search, region])
+    }, [
+        search,
+        region,
+        getAllCountries,
+        getCountriesByRegion,
+        searchCountries,
+        searchCountriesFilteredByRegion
+    ])
 
     const handleRegionChange = (newRegion: string) => {
         setRegion(newRegion)
