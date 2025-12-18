@@ -3,7 +3,7 @@ import styles from "./Header.module.css"
 import { useWindowBehavior } from "../../hooks/window-behavior"
 import { useChangeTheme } from "../../hooks/change-theme"
 import { useState } from "react"
-import { AiFillMoon, AiOutlineMoon } from "react-icons/ai"
+import { AiOutlineMoon, AiOutlineSun } from "react-icons/ai"
 import { Link } from "react-router-dom"
 
 const Header = () => {
@@ -25,8 +25,16 @@ const Header = () => {
 
                 <div className={styles.header__theme}>
                     <button className="button clear" onClick={handleChangeTheme}>
-                        {theme === "dark" ? <AiFillMoon /> : <AiOutlineMoon />}
-                        Dark Mode
+                        {theme === "dark"
+                            ? <>
+                                <AiOutlineSun />
+                                Light Mode
+                            </>
+
+                            : <>
+                                <AiOutlineMoon />
+                                Dark Mode
+                            </>}
                     </button>
                 </div>
             </Container>
