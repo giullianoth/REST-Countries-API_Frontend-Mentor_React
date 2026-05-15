@@ -29,7 +29,7 @@ const Country = () => {
         }
 
         getData()
-    }, [code])
+    }, [code, getBorderCountries, getCountry])
 
     return (
         <section className={styles.country}>
@@ -68,7 +68,8 @@ const Country = () => {
                                         </p>}
 
                                     <p className={styles.country__data}>
-                                        <strong>Population:</strong> {new Intl.NumberFormat().format(country?.population!)}
+                                        <strong>Population:</strong>{" "}
+                                        {country?.population ? new Intl.NumberFormat().format(country?.population) : 0}
                                     </p>
 
                                     <p className={styles.country__data}>
